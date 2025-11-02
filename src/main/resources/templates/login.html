@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skill Swap | Login</title>
+  <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+<div class="login-container">
+  <div class="login-box">
+    <h1>SkillSwap</h1>
+    <p class="subtitle">Exchange your skills with the world</p>
+
+    <form th:action="@{/login}" method="post">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      </div>
+
+      <button type="submit" class="btn-login">Login</button>
+    </form>
+
+    <div class="links">
+      <a th:href="@{/register}">Don't have an account? Register</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

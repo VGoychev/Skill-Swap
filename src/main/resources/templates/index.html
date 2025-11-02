@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Skill Swap | Learn & Teach</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+<!-- decorative layers -->
+<div class="corner-veil" aria-hidden="true"></div>
+
+<div class="particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+
+    <!-- ==== Side cards  ==== -->
+    <div class="side-cards" aria-hidden="true">
+        <aside class="side-card side-left">
+            <img src="/images/image1.png" alt="">
+        </aside>
+        <aside class="side-card side-bottom-left">
+            <img src="/images/image2.jpeg" alt="">
+        </aside>
+
+        <aside class="side-card side-right">
+            <img src="/images/image4.jpeg" alt="">
+        </aside>
+        <aside class="side-card side-bottom-right">
+            <img src="/images/image3.jpeg" alt="">
+        </aside>
+    </div>
+
+<div class="rotator-outside" aria-live="polite" aria-atomic="true">
+    <span id="rotating-word">Wanna learn a skill?</span>
+</div>
+
+    <main class="content" role="main" aria-label="SkillSwap introduction">
+        <header class="hero-head" aria-labelledby="hero-title">
+            <h1 id="hero-title">Skill Swap<small>Learn • Teach • Exchange</small></h1>
+
+            <p class="lead">
+                Connect with local and global learners. Share your knowledge, discover new hobbies, and grow together.
+            </p>
+
+            <nav class="btns" aria-label="Primary actions">
+                <a href="/register" class="btn btn-primary">Create account</a>
+                <a href="/login" class="btn btn-secondary">Login</a>
+            </nav>
+
+            <p class="cta-note">Free to join • Create your profile in under 2 minutes</p>
+        </header>
+
+        <div class="steps" aria-hidden="true">
+            <div class="step">
+                <div class="bullet">1</div>
+                <div class="step-body">
+                    <p class="step-title">Create a profile</p>
+                    <p class="step-sub">Add your skills and availability so others can find you.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="bullet">2</div>
+                <div class="step-body">
+                    <p class="step-title">Browse offers</p>
+                    <p class="step-sub">Find lessons, workshops, or casual exchanges near you.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="bullet">3</div>
+                <div class="step-body">
+                    <p class="step-title">Connect & learn</p>
+                    <p class="step-sub">Book sessions, rate experiences, and grow your network.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+<footer class="site-footer" role="contentinfo">
+    <p>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> Skill Swap — Share a skill, change a life</p>
+</footer>
+
+<!-- rotating script  -->
+<script>
+    (function(){
+        const words = [
+            'Master new skills.',
+            'Teach someone in need.',
+            'Share your knowledge.',
+            'Find a new hobby.',
+            'Grow together.',
+            'Meet new people.',
+            'Learn from others.',
+            'Join the community!'
+        ];
+
+        const el = document.getElementById('rotating-word');
+        if (!el || !words.length) return;
+
+        // pick a random index
+        let prev = -1;
+        function pickRandomIndex() {
+            if (words.length === 1) return 0;
+            let i = Math.floor(Math.random() * words.length);
+            // avoid immediate repeat
+            while (i === prev) {
+                i = Math.floor(Math.random() * words.length);
+            }
+            prev = i;
+            return i;
+        }
+
+        // random word
+        el.textContent = words[pickRandomIndex()];
+
+        function rotateWord(){
+            el.classList.add('fade-out');
+            setTimeout(() => {
+                el.textContent = words[pickRandomIndex()];
+                el.classList.remove('fade-out');
+            }, 400);
+        }
+
+        // rotate
+        setInterval(rotateWord, 2500);
+    })();
+</script>
+
+</body>
+</html>

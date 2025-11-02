@@ -1,0 +1,100 @@
+/* ===== SkillSwap Login Page Styling ===== */
+
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background-color: #f6f1eb; /* light brownish background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.login-box {
+    background-color: #fff8f0;
+    border-radius: 16px;
+    padding: 40px 50px;
+    box-shadow: 0 6px 20px rgba(140, 120, 90, 0.2);
+    text-align: center;
+    max-width: 380px;
+    width: 100%;
+}
+
+.login-box h1 {
+    margin-bottom: 10px;
+    font-size: 2em;
+    color: #7b5e44;
+}
+
+.subtitle {
+    font-size: 0.95em;
+    color: #a18463;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9em;
+    color: #6b5b45;
+    margin-bottom: 6px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbb79e;
+    border-radius: 8px;
+    font-size: 1em;
+    background-color: #fff;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-group input:focus {
+    border-color: #a67c52;
+    box-shadow: 0 0 5px rgba(166, 124, 82, 0.3);
+}
+
+.btn-login {
+    width: 100%;
+    background-color: #a67c52;
+    color: #fff;
+    border: none;
+    padding: 12px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-login:hover {
+    background-color: #8c653f;
+}
+
+.links {
+    margin-top: 15px;
+}
+
+.links a {
+    text-decoration: none;
+    color: #7b5e44;
+    font-size: 0.9em;
+    transition: color 0.2s ease;
+}
+
+.links a:hover {
+    color: #a67c52;
+}
