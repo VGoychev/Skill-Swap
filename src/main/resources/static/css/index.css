@@ -79,7 +79,6 @@ body {
     isolation: isolate;
 }
 
-
 .side-cards {
     position: fixed;
     inset: 0;
@@ -276,6 +275,60 @@ body {
     color: var(--text-muted);
     z-index: 4;
 }
+
+/* moving-words base (behind card) */
+.moving-words {
+    position: fixed;
+    inset: 0;
+    z-index: 2;              /* behind .login-box z-index:3 */
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(.6rem, 3vh, 1.2rem);
+    padding: 0;
+    overflow: hidden;
+    align-items: center;
+}
+
+/* each visual row is a viewport mask */
+.moving-words .line {
+    width: 100vw;            /* viewport-wide mask */
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+    position: relative;
+    height: 10rem;          /* visual height (tune as needed) */
+}
+
+/* inner track created by JS; we style text appearance here */
+.moving-words .track {
+    position: absolute;
+    left: 0;
+    top: 10%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    gap: 2rem;
+    align-items: center;
+    will-change: transform;
+    white-space: nowrap;
+    font-weight: 600;
+    font-size: 4em;
+    letter-spacing: .6px;
+    color: rgba(223,231,220,0.06); /* subtle */
+    pointer-events: none;
+}
+
+/* slightly brighter middle line */
+.moving-words .line:nth-child(2) .track { color: rgba(223,231,220,0.08); }
+.moving-words .line:nth-child(3) .track { color: rgba(223,231,220,0.055); }
+
+/* reduced motion fallback */
+@media (prefers-reduced-motion: reduce) {
+    .moving-words .track { transition: none !important; }
+}
+
 /* responsive rules */
 @media (max-width: 980px) {
     .content { width: min(92vw, 500px); padding: 1.2rem; gap: 1rem; }
