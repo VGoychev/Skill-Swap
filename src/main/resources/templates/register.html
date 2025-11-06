@@ -1,10 +1,338 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skill Swap | Register</title>
+
+    <!-- Roboto (same as main app) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for the eye icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+
+    <!-- page stylesheet -->
+    <link rel="stylesheet" href="/css/register.css">
 </head>
 <body>
+<!-- moving-words (JS-driven) -->
+<div id="movingWords" class="moving-words" aria-hidden="true">
+    <div class="line" data-speed="30" data-direction="left">
+        Learn • Teach • Share • Grow • Connect • Mentor • Discover • Exchange •
+    </div>
+    <div class="line" data-speed="18" data-direction="right">
+        Workshops • Sessions • Hobbies • Projects • Collaborate • Swap •
+    </div>
+    <div class="line" data-speed="24" data-direction="left">
+        Local • Global • Online • Offline • In-person • Remote •
+    </div>
+    <div class="line" data-speed="20" data-direction="right">
+        Innovation • Inspiration • Knowledge • Passion • Ideas • Vision •
+    </div>
+    <div class="line" data-speed="28" data-direction="left">
+        Code • Design • Create • Build • Solve • Improve • Evolve •
+    </div>
+    <div class="line" data-speed="16" data-direction="right">
+        Friendship • Networking • Growth • Exploration • Curiosity •
+    </div>
+    <div class="line" data-speed="26" data-direction="left">
+        Music • Art • Science • Culture • Adventure • Travel • Learn •
+    </div>
+    <div class="line" data-speed="22" data-direction="right">
+        Empower • Inspire • Lead • Dream • Achieve • Succeed • Believe •
+    </div>
+</div>
+
+<!-- ==== Side cards  ==== -->
+<div class="side-cards" aria-hidden="true">
+    <aside class="side-card side-left">
+        <img src="/images/image6.jpg" alt="">
+    </aside>
+
+    <aside class="side-card side-right">
+        <img src="/images/image7.jpg" alt="">
+    </aside>
+</div>
+
+<main class="register-container" role="main" aria-labelledby="register-title">
+
+    <section class="register-box" aria-describedby="register-desc">
+        <!-- Logo before the header -->
+        <a href="/" class="logo-symbol-link" aria-label="Go to home page">
+            <img src="/images/skill-swap-logo.png" alt="Skill Swap symbol" class="logo-symbol">
+        </a>
+
+        <header class="brand">
+            <h1 id="register-title">Skill Swap</h1>
+            <p id="register-desc" class="subtitle">Join our community and start learning</p>
+        </header>
+
+        <form th:action="@{/register}" action="/register" method="post" class="register-form" novalidate>
+
+            <div class="form-row">
+                <label for="username">Username</label>
+                <input class="form-control"
+                       id="username"
+                       name="username"
+                       type="text"
+                       inputmode="text"
+                       autocomplete="username"
+                       placeholder="Choose a username"
+                       required
+                       aria-required="true"
+                       autofocus>
+            </div>
+
+            <div class="form-row">
+                <label for="email">Email</label>
+                <input class="form-control"
+                       id="email"
+                       name="email"
+                       type="email"
+                       inputmode="email"
+                       autocomplete="email"
+                       placeholder="Enter your email address"
+                       required
+                       aria-required="true">
+            </div>
+
+            <div class="form-row">
+                <label for="firstName">First Name</label>
+                <input class="form-control"
+                       id="firstName"
+                       name="firstName"
+                       type="text"
+                       inputmode="text"
+                       autocomplete="given-name"
+                       placeholder="Enter your first name"
+                       required
+                       aria-required="true">
+            </div>
+
+            <div class="form-row">
+                <label for="password">Password</label>
+                <div class="password-wrap">
+                    <input class="form-control"
+                           id="password"
+                           name="password"
+                           type="password"
+                           autocomplete="new-password"
+                           placeholder="Create a password"
+                           required
+                           aria-required="true">
+
+                    <i id="toggleIcon"
+                       class="fa-solid fa-eye"
+                       role="button"
+                       tabindex="0"
+                       aria-label="Show password"
+                       title="Show password"></i>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="password-wrap">
+                    <input class="form-control"
+                           id="confirmPassword"
+                           name="confirmPassword"
+                           type="password"
+                           autocomplete="new-password"
+                           placeholder="Confirm your password"
+                           required
+                           aria-required="true">
+
+                    <i id="toggleIconConfirm"
+                       class="fa-solid fa-eye"
+                       role="button"
+                       tabindex="0"
+                       aria-label="Show password"
+                       title="Show password"></i>
+                </div>
+            </div>
+
+            <div class="form-row form-actions">
+                <button type="submit" class="btn btn-primary btn-register">Create Account</button>
+            </div>
+        </form>
+
+        <div class="helper-links">
+            <a th:href="@{/login}" href="/login" class="link">Already have an account? Login</a>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <p>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> SkillSwap — Share a skill, change a life</p>
+</footer>
+
+<!-- Password toggle script -->
+<script>
+    (function () {
+        // Password field toggle
+        const input = document.getElementById('password');
+        const icon  = document.getElementById('toggleIcon');
+
+        // Confirm password field toggle
+        const inputConfirm = document.getElementById('confirmPassword');
+        const iconConfirm  = document.getElementById('toggleIconConfirm');
+
+        function setupToggle(inputEl, iconEl) {
+            if (!inputEl || !iconEl) return;
+
+            function setHiddenState() {
+                inputEl.type = 'password';
+                iconEl.classList.remove('fa-eye-slash');
+                iconEl.classList.add('fa-eye');
+                iconEl.setAttribute('aria-label', 'Show password');
+                iconEl.title = 'Show password';
+            }
+
+            function setVisibleState() {
+                inputEl.type = 'text';
+                iconEl.classList.remove('fa-eye');
+                iconEl.classList.add('fa-eye-slash');
+                iconEl.setAttribute('aria-label', 'Hide password');
+                iconEl.title = 'Hide password';
+            }
+
+            // toggle on click
+            iconEl.addEventListener('click', () => {
+                if (inputEl.type === 'password') setVisibleState();
+                else setHiddenState();
+            });
+
+            // keyboard accessibility: Enter / Space
+            iconEl.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+                    e.preventDefault();
+                    iconEl.click();
+                }
+            });
+
+            // initialize hidden
+            setHiddenState();
+        }
+
+        // Setup both password fields
+        setupToggle(input, icon);
+        setupToggle(inputConfirm, iconConfirm);
+    })();
+</script>
+
+<!-- Moving words script -->
+<script>
+    (function(){
+        // Respect reduced motion early
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduceMotion) return;
+
+        // Config: get container lines
+        const container = document.getElementById('movingWords');
+        if (!container) return;
+
+        // For each .line we will create a .track with two copies of the text so it loops seamlessly
+        const lines = Array.from(container.querySelectorAll('.line')).map(line => {
+            const speed = Number(line.dataset.speed) || 24; // px / sec
+            const direction = (line.dataset.direction === 'right') ? 1 : -1;
+
+            // Create track
+            const track = document.createElement('div');
+            track.className = 'track';
+
+            // Source text (trim)
+            const text = line.textContent.trim();
+
+            // Create two identical spans to duplicate the content
+            const spanA = document.createElement('span');
+            spanA.textContent = text;
+            const spanB = document.createElement('span');
+            spanB.textContent = text;
+
+            // Append
+            track.appendChild(spanA);
+            track.appendChild(spanB);
+
+            // Clear original line's text and insert track
+            line.textContent = '';
+            line.appendChild(track);
+
+            return { lineEl: line, trackEl: track, speed, direction, width: 0, offset: 0 };
+        });
+
+        // Resize handler: measure track width and ensure track is at least 2*viewport width
+        function measure() {
+            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            lines.forEach(item => {
+                // natural width of track (two copies)
+                item.trackEl.style.transform = 'translateX(0)';
+                const natural = item.trackEl.scrollWidth;
+
+                // Ensure track is at least 2 * vw
+                if (natural < vw * 2) {
+                    while (item.trackEl.scrollWidth < vw * 2) {
+                        const clone = item.trackEl.children[0].cloneNode(true);
+                        item.trackEl.appendChild(clone);
+                    }
+                }
+                item.width = item.trackEl.scrollWidth;
+                item.offset = 0;
+                item.trackEl.style.transform = `translateX(${item.offset}px)`;
+            });
+        }
+
+        // Animation loop using requestAnimationFrame
+        let lastTs = null;
+        function tick(ts) {
+            if (!lastTs) lastTs = ts;
+            const dt = (ts - lastTs) / 1000; // seconds
+            lastTs = ts;
+
+            lines.forEach(item => {
+                const delta = item.speed * dt * (item.direction === -1 ? -1 : 1);
+                item.offset += delta;
+
+                const half = item.width / 2;
+                if (item.direction === -1) {
+                    if (item.offset <= -half) item.offset += half;
+                } else {
+                    if (item.offset >= 0) item.offset -= half;
+                }
+
+                item.trackEl.style.transform = `translate3d(${item.offset}px,0,0)`;
+            });
+
+            rafId = requestAnimationFrame(tick);
+        }
+
+        // Start/stop visibility handling
+        let rafId = null;
+        function start() {
+            if (rafId) return;
+            lastTs = null;
+            rafId = requestAnimationFrame(tick);
+        }
+        function stop() {
+            if (!rafId) return;
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+
+        // Visibility change: pause when tab not visible to save CPU
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) stop(); else start();
+        });
+
+        // Re-measure on resize and start
+        window.addEventListener('resize', () => {
+            measure();
+        });
+
+        // Initial measure and start
+        measure();
+        start();
+    })();
+</script>
 
 </body>
 </html>

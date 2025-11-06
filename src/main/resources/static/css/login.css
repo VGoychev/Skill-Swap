@@ -78,30 +78,19 @@ body {
 
 /* left card slightly rotated */
 .side-left {
-    left: clamp(20em, 10vw, 1.8rem);
+    left: clamp(25em, 10vw, 1.8rem);
     top: 12em;
     transform: rotate(-6deg) translateZ(0);
-}
-
-.side-bottom-left {
-    left: clamp(5em, 10vw, 1.8rem);
-    top: 25em;
-    transform: rotate(-24deg) translateZ(0);
 }
 
 
 /* right card slightly rotated */
 .side-right {
-    right: clamp(20em, -10vw, -3.2rem);
+    right: clamp(25em, -10vw, -3.2rem);
     top: 12em;
     transform: rotate(6deg) translateZ(0);
 }
 
-.side-bottom-right {
-    right: clamp(5em, -10vw, -3.2rem);
-    top: 25em;
-    transform: rotate(24deg) translateZ(0);
-}
 
 /* enable relative positioning for the card */
 .login-box { position: relative; padding-top: clamp(3.2rem, 3.6vw, 4.2rem); }
