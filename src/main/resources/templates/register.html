@@ -67,88 +67,70 @@
             <p id="register-desc" class="subtitle">Join our community and start learning</p>
         </header>
 
-        <form th:action="@{/register}" action="/register" method="post" class="register-form" novalidate>
+        <form th:action="@{/register}" method="post" class="register-form" th:object="${registerRequest}" novalidate>
+
+            <!-- Global backend errors (e.g., username/email already exists) -->
+            <div class="alert alert-error" th:if="${#fields.hasGlobalErrors()}">
+                <ul>
+                    <li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+                </ul>
+            </div>
 
             <div class="form-row">
+                <div class="label-row">
                 <label for="username">Username</label>
-                <input class="form-control"
-                       id="username"
-                       name="username"
-                       type="text"
-                       inputmode="text"
-                       autocomplete="username"
-                       placeholder="Choose a username"
-                       required
-                       aria-required="true"
-                       autofocus>
-            </div>
-
-            <div class="form-row">
-                <label for="email">Email</label>
-                <input class="form-control"
-                       id="email"
-                       name="email"
-                       type="email"
-                       inputmode="email"
-                       autocomplete="email"
-                       placeholder="Enter your email address"
-                       required
-                       aria-required="true">
-            </div>
-
-            <div class="form-row">
-                <label for="firstName">First Name</label>
-                <input class="form-control"
-                       id="firstName"
-                       name="firstName"
-                       type="text"
-                       inputmode="text"
-                       autocomplete="given-name"
-                       placeholder="Enter your first name"
-                       required
-                       aria-required="true">
-            </div>
-
-            <div class="form-row">
-                <label for="password">Password</label>
-                <div class="password-wrap">
-                    <input class="form-control"
-                           id="password"
-                           name="password"
-                           type="password"
-                           autocomplete="new-password"
-                           placeholder="Create a password"
-                           required
-                           aria-required="true">
-
-                    <i id="toggleIcon"
-                       class="fa-solid fa-eye"
-                       role="button"
-                       tabindex="0"
-                       aria-label="Show password"
-                       title="Show password"></i>
+                <span class="error-message" th:if="${#fields.hasErrors('username')}">Invalid Username</span>
                 </div>
+                <input class="form-control" id="username" type="text" placeholder="Choose a username" required th:field="*{username}">
+
+            </div>
+
+
+            <div class="form-row">
+                <div class="label-row">
+                    <label for="email">Email</label>
+                    <span class="error-message" th:if="${#fields.hasErrors('email')}" >Invalid Email</span>
+                </div>
+                <input class="form-control" id="email" type="email" placeholder="Enter your email address" required th:field="*{email}">
+
             </div>
 
             <div class="form-row">
+                <div class="label-row">
+                    <label for="firstName">First Name</label>
+                    <span class="error-message" th:if="${#fields.hasErrors('firstName')}">First Name should be between 2 and 25 symbols</span>
+                </div>
+
+                <input class="form-control" id="firstName" type="text" placeholder="Enter your first name" required th:field="*{firstName}">
+
+            </div>
+
+            <div class="form-row">
+                <div class="label-row">
+                    <label for="password">Password</label>
+                    <span class="error-message" th:if="${#fields.hasErrors('password')}">Password should be minimum 6 symbols</span>
+                </div>
+                <div class="password-wrap">
+                    <input class="form-control" id="password" type="password" placeholder="Create a password" required th:field="*{password}">
+
+                    <i id="toggleIcon" class="fa-solid fa-eye" role="button" tabindex="0" aria-label="Show password" title="Show password"></i>
+                </div>
+
+            </div>
+
+            <div class="form-row">
+                <div class="label-row">
                 <label for="confirmPassword">Confirm Password</label>
-                <div class="password-wrap">
-                    <input class="form-control"
-                           id="confirmPassword"
-                           name="confirmPassword"
-                           type="password"
-                           autocomplete="new-password"
-                           placeholder="Confirm your password"
-                           required
-                           aria-required="true">
-
-                    <i id="toggleIconConfirm"
-                       class="fa-solid fa-eye"
-                       role="button"
-                       tabindex="0"
-                       aria-label="Show password"
-                       title="Show password"></i>
+                <span class="error-message" th:if="${#fields.hasErrors('repeatedPassword')}">Passwords do not match</span>
+                <span class="error-message" th:if="${#fields.hasErrors('passwordMatching')}">Passwords do not match</span>
+                <span id="matchError" class="error-message" style="display:none;">Passwords do not match</span>
                 </div>
+                <div class="password-wrap">
+                    <input class="form-control" id="confirmPassword" type="password" placeholder="Confirm your password" required th:field="*{repeatedPassword}">
+
+                    <i id="toggleIconConfirm" class="fa-solid fa-eye" role="button" tabindex="0" aria-label="Show password" title="Show password"></i>
+                </div>
+
             </div>
 
             <div class="form-row form-actions">
@@ -157,7 +139,7 @@
         </form>
 
         <div class="helper-links">
-            <a th:href="@{/login}" href="/login" class="link">Already have an account? Login</a>
+            <a href="/login" class="link">Already have an account? Login</a>
         </div>
     </section>
 </main>
@@ -217,6 +199,27 @@
         // Setup both password fields
         setupToggle(input, icon);
         setupToggle(inputConfirm, iconConfirm);
+
+        // Live password match validation
+        const form = document.querySelector('form.register-form');
+        const matchErrorEl = document.getElementById('matchError');
+        function validateMatch() {
+            const pwd = input ? input.value : '';
+            const rep = inputConfirm ? inputConfirm.value : '';
+            const ok = !rep || pwd === rep; // only show when user starts typing confirm
+            if (inputConfirm) {
+                if (!ok) {
+                    inputConfirm.setCustomValidity('Passwords do not match');
+                    if (matchErrorEl) matchErrorEl.style.display = '';
+                } else {
+                    inputConfirm.setCustomValidity('');
+                    if (matchErrorEl) matchErrorEl.style.display = 'none';
+                }
+            }
+        }
+        if (input) input.addEventListener('input', validateMatch);
+        if (inputConfirm) inputConfirm.addEventListener('input', validateMatch);
+        if (form) form.addEventListener('submit', validateMatch);
     })();
 </script>
 
