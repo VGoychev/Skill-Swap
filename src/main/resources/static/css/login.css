@@ -91,6 +91,53 @@ body {
     transform: rotate(6deg) translateZ(0);
 }
 
+/* ====== Alert message styles ====== */
+.login-messages {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Base alert box */
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--panel-stroke);
+    backdrop-filter: blur(var(--panel-blur));
+    font-size: 0.95rem;
+    line-height: 1.4;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Info: accent color tone */
+.alert-info {
+    background-color: rgba(42, 96, 65, 0.3); /* semi-transparent accent */
+    border-color: var(--accent);
+    color: var(--text-strong);
+}
+
+/* Warning: warm accent contrast */
+.alert-warning {
+    background-color: rgba(255, 183, 77, 0.15); /* soft amber glow */
+    border-color: #ffb74d;
+    color: #ffd699;
+}
+
+/* Danger: subtle red contrast against green theme */
+.alert-danger {
+    background-color: rgba(200, 60, 60, 0.15);
+    border-color: rgba(200, 60, 60, 0.6);
+    color: #ff8c8c;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
 
 /* enable relative positioning for the card */
 .login-box { position: relative; padding-top: clamp(3.2rem, 3.6vw, 4.2rem); }

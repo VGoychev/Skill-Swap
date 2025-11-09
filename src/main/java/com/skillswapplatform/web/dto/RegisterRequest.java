@@ -31,7 +31,7 @@ public class RegisterRequest {
     @AssertTrue(message = "Passwords do not match")
     public boolean isPasswordMatching() {
         if (password == null || repeatedPassword == null) {
-            return true; // don't trigger before both are provided
+            return true;
         }
         return password.equals(repeatedPassword);
     }
