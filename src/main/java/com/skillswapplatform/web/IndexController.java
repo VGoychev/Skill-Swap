@@ -52,7 +52,6 @@ public class IndexController {
         try {
             userService.registerUser(registerRequest);
         } catch (IllegalArgumentException e) {
-            // Surface service validation as a global error
             bindingResult.reject("registrationError", e.getMessage());
             return new ModelAndView("register");
         }
