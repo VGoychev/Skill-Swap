@@ -1,5 +1,7 @@
 package com.skillswapplatform.web;
 
+import com.skillswapplatform.offer.model.Offer;
+import com.skillswapplatform.offer.service.OfferService;
 import com.skillswapplatform.user.service.UserService;
 import com.skillswapplatform.utils.MessageUtil;
 import com.skillswapplatform.web.dto.LoginRequest;
@@ -13,12 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 public class IndexController {
     private final UserService userService;
+    private final OfferService offerService;
 
-    public IndexController(UserService userService) {
+    public IndexController(UserService userService, OfferService offerService) {
         this.userService = userService;
+        this.offerService = offerService;
     }
 
     @GetMapping("/")
@@ -59,7 +65,12 @@ public class IndexController {
     }
 
     @GetMapping("/home")
-    public String getHomePage() {
-        return "home";
+    public ModelAndView getHomePage() {
+        ModelAndView modelAndView = new ModelAndView("home");
+
+        List<Offer> offers = offerService.getRecentOffers();
+        modelAndView.addObject("offers", offers);
+
+        return modelAndView;
     }
 }
